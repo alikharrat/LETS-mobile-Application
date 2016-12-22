@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { AuthService } from '../../services/AuthService';
+import { AlertService } from '../../services/AlertService';
 import { Page1 } from '../page1/page1';
 
 @Component({
@@ -11,18 +12,19 @@ export class LoginPage {
 	private username: string;
 	private password: string;
 
-	constructor(public navCtrl: NavController,
+	constructor(private navCtrl: NavController,
+		private toastCtrl: ToastController,
+		private alertService: AlertService,
 		private authService: AuthService) {
 	}
 
 	login() {
 		console.log(this.username, this.password);
 		this.authService.login(this.username, this.password)
-			.subscribe((result) => {
-				if (result) {
-					this.navCtrl.push(Page1);
-				}
-			});
+			.subscribe(
+			result => this.navCtrl.push(Page1),
+			error => this.alertService.showError('Connection problem!')
+			);
 	}
 
 }
