@@ -57,7 +57,7 @@ export class AuthService {
 	}
 
 	logout() {
-		return (<any>this.http.get(this.settings.URL.conUrl + 'user/logout'))
+		return (<any>this.http.get(this.settings.URL.userLogout))
 			.map(res => {
 				console.log('logout', res);
 				this.destroyToken();
@@ -66,7 +66,7 @@ export class AuthService {
 	}
 
 	private getLoginInfo(username) {
-		return this.http.get(this.settings.URL.conUrl + 'member/' + username)
+		return this.http.get(this.settings.URL.memberId + username)
 			.map(res => {
 				console.log('getLoginInfo', res);
 				res.json();
@@ -82,7 +82,7 @@ export class AuthService {
 		headers.append('Content-Type', 'application/json');
 		headers.append('Access-Control-Allow-Origin', '*');
 		return this.http.post(
-			this.settings.URL.con + 'user/login',
+			this.settings.URL.userLogin,
 			JSON.stringify({
 				name: username,
 				pass: password,
@@ -101,7 +101,7 @@ export class AuthService {
 	}
 
 	getUserInfo(user_id) {
-		return (<any>this.http.get(this.settings.URL.conUrl + user_id))
+		return (<any>this.http.get(this.settings.URL.userId + user_id))
 			.map(res => {
 				console.log('getUserInfo', res)
 				return res;
