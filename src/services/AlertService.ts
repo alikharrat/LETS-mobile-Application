@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from 'ionic-angular';
+import { ToastController, AlertController } from 'ionic-angular';
 
 @Injectable()
 export class AlertService {
-	constructor(private toastCtrl: ToastController) { }
+
+	constructor(private toastCtrl: ToastController,
+		private alertCtrl: AlertController) { }
 
 	showError(message) {
-		return this.toastCtrl.create({
-			message: message,
-			duration: 3000
+		console.error(message);
+		return this.alertCtrl.create({
+			title: 'Error!',
+			subTitle: message,
+			buttons: ['OK']
 		}).present();
+		// return this.toastCtrl.create({
+		// 	message: message,
+		// 	duration: 3000
+		// }).present();
 	}
-};
+}

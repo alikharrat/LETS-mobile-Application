@@ -3,8 +3,8 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import './rxjs-operators.ts';
 import { LoginPage } from '../pages/login/login';
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
+// import { Home } from '../pages/home/home';
+// import { Page2 } from '../pages/page2/page2';
 
 
 @Component({
@@ -12,9 +12,7 @@ import { Page2 } from '../pages/page2/page2';
 })
 export class LetsApp {
   @ViewChild(Nav) nav: Nav;
-
   rootPage: any = LoginPage;
-
   // pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform) {
@@ -22,7 +20,7 @@ export class LetsApp {
 
     // used for an example of ngFor and navigation
     // this.pages = [
-    //   { title: 'Page One', component: Page1 },
+    //   { title: 'Page One', component: Home },
     //   { title: 'Page Two', component: Page2 }
     // ];
 

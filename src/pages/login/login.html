@@ -1,23 +1,30 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Login
+      {{sitename}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-	  <ion-item>
-	    <ion-label floating>Username</ion-label>
-	    <ion-input type="text" [(ngModel)]="username"></ion-input>
-	  </ion-item>
-	  <ion-item>
-	    <ion-label floating>Password</ion-label>
-	    <ion-input type="password" [(ngModel)]="password"></ion-input>
-	  </ion-item>
-	</ion-list>
-
-	<button ion-button block (click)="login()">Sign In</button>
-	<button ion-button block (click)="register()">Register</button>
+	<form [formGroup]="loginForm">
+	  <ion-list>
+		  <ion-item>
+		    <ion-label floating>Username</ion-label>
+		    <ion-input type="text" required formControlName="username"></ion-input>
+		  </ion-item>
+		  <ion-item *ngIf="formErrors.username" class="alert alert-danger">
+		  	<p>{{ formErrors.username }}</p>
+		  </ion-item>
+		  <ion-item>
+		    <ion-label floating>Password</ion-label>
+		    <ion-input type="password" required formControlName="password"></ion-input>
+		  </ion-item>
+		  <ion-item *ngIf="formErrors.password" class="alert alert-danger">
+		  	<p>{{ formErrors.password }}</p>
+		  </ion-item>
+		</ion-list>
+		<button ion-button block [disabled]="!loginForm.valid" (click)="login()">Sign In</button>
+		<button ion-button block (click)="register()">Register</button>
+	</form>
 </ion-content>
