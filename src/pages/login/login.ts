@@ -27,6 +27,7 @@ export class LoginPage implements OnInit {
 			config => {
 				this.sitename = config.sitename;
 			});
+		this.configService.loadAppConfig();
 	}
 
 	login() {

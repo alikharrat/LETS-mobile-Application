@@ -8,21 +8,31 @@ import { Config } from '../domain/Config';
 
 @Injectable()
 export class ConfigService {
+	private config: Config;
 	private appConfig = new Subject<Config>();
 	getAppConfig = this.appConfig.asObservable();
 
 	constructor(private settings: AppSettings,
 		private httpBasicAuth: HttpBasicAuth,
-		private alertService: AlertService) {
-		this.requestAppConfig().subscribe(
-			result => this.appConfig.next(result),
-			error => this.alertService.showError('Connection problem!')
-		);
+		private alertService: AlertService) { 
+		this.loadAppConfig();
+	}
+
+	loadAppConfig() {
+		if (this.config) {
+			this.appConfig.next(this.config);
+		} else {
+			this.requestAppConfig().subscribe(
+				result => this.appConfig.next(result),
+				error => this.alertService.showError('Connection problem!')
+			);
+		}
 	}
 
 	requestAppConfig(): Observable<Config> {
 		return this.httpBasicAuth.get(this.settings.URL.config)
 			.map(response => {
+				this.config = response;
 				return response;
 			});
 	}

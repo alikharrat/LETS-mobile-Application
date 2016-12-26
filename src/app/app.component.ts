@@ -16,6 +16,7 @@ export class LetsApp {
 
   constructor(public platform: Platform,
     private authService: AuthService) {
+    this.authService.loadToken();
     if (this.authService.isAuthenticated()) {
       this.rootPage = HomePage;
     }
