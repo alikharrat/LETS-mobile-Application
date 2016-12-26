@@ -23,10 +23,11 @@ export class AppSettings {
 	public get URL(): any {
 		return {
 			sessionToken: `${this.SERVER_URL}/rest/session/token`,
-			userLogin: `${this.SERVER_URL}/user/login`,
-			userLogout: `${this.SERVER_URL}/user/logout`,
+			login: `${this.SERVER_URL}/user/login`,
+			logout: `${this.SERVER_URL}/user/logout`,
 			userInfo: `${this.SERVER_URL}/v1/member`,
-			config: `${this.SERVER_URL}`
+			config: `${this.SERVER_URL}`,
+			transactions: `${this.SERVER_URL}/v1/transaction`
 		};
 	}
 

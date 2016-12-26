@@ -2,10 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import './rxjs-operators.ts';
+import { AuthService } from '../services/AuthService';
 import { LoginPage } from '../pages/login/login';
-// import { Home } from '../pages/home/home';
-// import { Page2 } from '../pages/page2/page2';
-
+import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
@@ -13,17 +12,17 @@ import { LoginPage } from '../pages/login/login';
 export class LetsApp {
   @ViewChild(Nav) nav: Nav;
   rootPage: any = LoginPage;
-  // pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform,
+    private authService: AuthService) {
+    if (this.authService.isAuthenticated()) {
+      this.rootPage = HomePage;
+    }
+    this.pages = [
+      { title: 'Home', component: HomePage }
+    ];
     this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    // this.pages = [
-    //   { title: 'Page One', component: Home },
-    //   { title: 'Page Two', component: Page2 }
-    // ];
-
   }
 
   initializeApp() {
@@ -35,9 +34,16 @@ export class LetsApp {
     });
   }
 
-  // openPage(page) {
-  //   // Reset the content nav to have just this page
-  //   // we wouldn't want the back button to show in this scenario
-  //   this.nav.setRoot(page.component);
-  // }
+  openPage(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(page.component);
+  }
+
+  logout() {
+    this.authService.logout()
+      .subscribe(
+      result => this.nav.setRoot(LoginPage)
+      );
+  }
 }

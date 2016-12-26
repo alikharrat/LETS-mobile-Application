@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { AuthService } from '../../services/AuthService';
 import { ConfigService } from '../../services/ConfigService';
 import { AlertService } from '../../services/AlertService';
@@ -17,10 +17,12 @@ export class LoginPage implements OnInit {
 	private password: string;
 
 	constructor(private navCtrl: NavController,
+		private menuCtrl: MenuController,
 		private formBuilder: FormBuilder,
 		private authService: AuthService,
 		private configService: ConfigService,
 		private alertService: AlertService) {
+		this.menuCtrl.enable(false, 'app-menu');
 		this.configService.getAppConfig.subscribe(
 			config => {
 				this.sitename = config.sitename;
@@ -33,7 +35,7 @@ export class LoginPage implements OnInit {
 		this.buildForm();
 		this.authService.login(this.username, this.password)
 			.subscribe(
-			result => this.navCtrl.push(HomePage),
+			result => this.navCtrl.setRoot(HomePage),
 			error => this.alertService.showError('Connection problem!')
 			);
 	}

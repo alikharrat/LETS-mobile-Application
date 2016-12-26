@@ -5,6 +5,7 @@ import { LetsApp } from './app.component';
 import { AppSettings } from './app.settings';
 import { AuthService } from '../services/AuthService';
 import { ConfigService } from '../services/ConfigService';
+import { TransactionService } from '../services/TransactionService';
 import { AlertService } from '../services/AlertService';
 import { HttpBasicAuth } from '../services/HttpBasicAuth';
 import { LoginPage } from '../pages/login/login';
@@ -31,6 +32,7 @@ import { HomePage } from '../pages/home/home';
     AppSettings,
     AuthService,
     ConfigService,
+    TransactionService,
     AlertService,
     HttpBasicAuth,
     {provide: ErrorHandler, useClass: IonicErrorHandler}]

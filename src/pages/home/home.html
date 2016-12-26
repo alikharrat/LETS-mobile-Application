@@ -3,16 +3,38 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Page One</ion-title>
+    <ion-title>Welcome, {{ username }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <ion-card *ngFor="let transaction of transactions">
+    <ion-card-content>
+      <ion-card-title>
+        <ion-icon [name]="stateIcons[transaction.state]"></ion-icon>
+        {{ transaction.tags }}
+      </ion-card-title>
+      <p>
+        {{ transaction.payer }} paid {{ transaction.payee }}
+        {{ transaction.amount }} hour(s) for {{ transaction.description }}
+      </p>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left color="dark" clear small>
+          <ion-icon name="ios-information-circle"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col *ngIf="transaction.state==='pending'">
+        <button ion-button icon-left color="dark" clear small>
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left color="dark" clear small>
+          <ion-icon name="ios-close-circle"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>

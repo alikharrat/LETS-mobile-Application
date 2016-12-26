@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { AppSettings } from '../app/app.settings';
 import { HttpBasicAuth } from './HttpBasicAuth';
 import { Member } from '../domain/Member';
@@ -8,59 +9,57 @@ import { MEMBER } from '../test/mock-member';
 @Injectable()
 export class AuthService {
 	private LOCAL_TOKEN_KEY: string;
-	private isAuthenticated: boolean;
+	private hasToken: boolean;
+	private userInfo = new Subject<Member>();
+	getUserInfo = this.userInfo.asObservable();
 
 	constructor(private settings: AppSettings,
 		private httpBasicAuth: HttpBasicAuth) {
 		this.LOCAL_TOKEN_KEY = 'auth_token';
-		this.isAuthenticated = false;
+		this.hasToken = false;
 		this.loadToken();
 	}
 
-	private loadToken() {
+	loadToken() {
 		var token = window.localStorage.getItem(this.LOCAL_TOKEN_KEY);
 		if (token) {
-			this.setToken(token);
+			this.setToken(JSON.parse(token));
 		}
 	}
 
 	private storeToken(token) {
-		window.localStorage.setItem(this.LOCAL_TOKEN_KEY, token);
+		window.localStorage.setItem(this.LOCAL_TOKEN_KEY, JSON.stringify(token));
 		this.setToken(token);
 	}
 
 	private destroyToken() {
-		this.isAuthenticated = false;
+		this.hasToken = false;
 		window.localStorage.removeItem(this.LOCAL_TOKEN_KEY);
 	}
 
 	private setToken(token) {
-		this.isAuthenticated = true;
+		this.hasToken = true;
+		this.userInfo.next(token);
 	}
 
-	logout() {
-		return this.httpBasicAuth.get(this.settings.URL.userLogout)
-			.map(response => {
-				console.log('logout', response);
-				this.destroyToken();
-				return response;
-			});
+	isAuthenticated() {
+		return this.hasToken;
 	}
 
-	getUserInfo() {
+	private requestUserInfo(): Observable<Member> {
 		// return this.httpBasicAuth.getWithAuth(this.settings.URL.userInfo)
 		return this.httpBasicAuth.get(this.settings.URL.config)
-			.map((response) => {
-				console.log('getUserInfo', MEMBER);
+			.map(response => {
 				// this.storeToken(response);
 				// return response;
+				this.storeToken(MEMBER);
 				return MEMBER;
 			});
 	}
 
-	login(username, password) {
+	login(username, password): Observable<Member> {
 		// return this.httpBasicAuth.post(
-		// 	this.settings.URL.userLogin,
+		// 	this.settings.URL.login,
 		// 	JSON.stringify({
 		// 		username: username,
 		// 		password: password
@@ -68,7 +67,16 @@ export class AuthService {
 		// ).map(response => {
 		// 	console.log('login json', response);
 			this.httpBasicAuth.setAuthorizationToken(username, password);
-			return this.getUserInfo();
+			return this.requestUserInfo();
 		// });
+	}
+
+	logout() {
+		// return this.httpBasicAuth.get(this.settings.URL.logout)
+		return this.httpBasicAuth.get(this.settings.URL.config)
+			.map(response => {
+				this.destroyToken();
+				return response;
+			});
 	}
 }

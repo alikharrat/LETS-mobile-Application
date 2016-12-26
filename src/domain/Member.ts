@@ -1,10 +1,10 @@
 export class Member {
 	[property: string]: any;
   id: string;
-  name: Object;
+  name: string;
 	aboutme: string;
   balance: string;
-  created: string;
+  created: number;
   locality: string;
-  uri: Object;
+  uri: string;
 }

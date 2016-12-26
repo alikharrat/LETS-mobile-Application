@@ -23,7 +23,7 @@ export class ConfigService {
 	requestAppConfig(): Observable<Config> {
 		return this.httpBasicAuth.get(this.settings.URL.config)
 			.map(response => {
-				return <Config><any>response;
+				return response;
 			});
 	}
 }
