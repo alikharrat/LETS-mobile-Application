@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Welcome to Offer, {{ username }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let offer of offers">
+    <ion-card-content>
+      <ion-card-title>
+        <ion-icon [name]="stateIcons[offer.state]"></ion-icon>
+        {{ offer.title }}
+      </ion-card-title>
+      <p>
+        {{ offer.body }}
+        expires in {{ offer.expires | amDifference: today :'days' : true }} days
+      </p>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left color="dark" clear small>
+          <ion-icon name="ios-information-circle"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left color="dark" clear small>
+          <ion-icon name="ios-close-circle"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>

@@ -5,6 +5,7 @@ import './rxjs-operators.ts';
 import { AuthService } from '../services/AuthService';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
+import { OfferPage } from '../pages/offer/offer';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +22,8 @@ export class LetsApp {
       this.rootPage = HomePage;
     }
     this.pages = [
-      { title: 'Home', component: HomePage }
+      { title: 'Home', component: HomePage },
+      { title: 'Offers', component: OfferPage }
     ];
     this.initializeApp();
   }
