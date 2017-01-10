@@ -9,17 +9,25 @@ import { ConfigService } from '../services/ConfigService';
 import { TransactionService } from '../services/TransactionService';
 import { OfferService } from '../services/OfferService';
 import { AlertService } from '../services/AlertService';
+import { CategoriesService } from '../services/CategoriesService';
+import { LocalitiesService } from '../services/LocalitiesService';
 import { HttpBasicAuth } from '../services/HttpBasicAuth';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { OfferPage } from '../pages/offer/offer';
+import { OfferDetailPage } from '../pages/offerDetail/offerDetail';
+import { AddOfferPage } from '../pages/addOffer/addOffer';
+import { UnixTimeToMoment } from '../pipes/UnixTimeToMoment';
 
 @NgModule({
   declarations: [
     LetsApp,
     LoginPage,
     HomePage,
-    OfferPage
+    OfferPage,
+    OfferDetailPage,
+    AddOfferPage,
+    UnixTimeToMoment
   ],
   imports: [
     IonicModule.forRoot(LetsApp),
@@ -32,7 +40,9 @@ import { OfferPage } from '../pages/offer/offer';
     LetsApp,
     LoginPage,
     HomePage,
-    OfferPage
+    OfferPage,
+    OfferDetailPage,
+    AddOfferPage
   ],
   providers: [
     AppSettings,
@@ -41,7 +51,9 @@ import { OfferPage } from '../pages/offer/offer';
     TransactionService,
     OfferService,
     AlertService,
+    CategoriesService,
+    LocalitiesService,
     HttpBasicAuth,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}]
+    { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
-export class AppModule {}
+export class AppModule { }

@@ -46,7 +46,7 @@ export class LetsApp {
   logout() {
     this.authService.logout()
       .subscribe(
-      result => this.nav.setRoot(LoginPage)
+      response => this.nav.setRoot(LoginPage)
       );
   }
 }
