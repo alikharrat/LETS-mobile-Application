@@ -9,6 +9,7 @@ import { ConfigService } from '../services/ConfigService';
 import { TransactionService } from '../services/TransactionService';
 import { OfferService } from '../services/OfferService';
 import { AlertService } from '../services/AlertService';
+import { MemberService } from '../services/MemberService';
 import { CategoriesService } from '../services/CategoriesService';
 import { LocalitiesService } from '../services/LocalitiesService';
 import { HttpBasicAuth } from '../services/HttpBasicAuth';
@@ -18,6 +19,9 @@ import { OfferPage } from '../pages/offer/offer';
 import { OfferDetailPage } from '../pages/offerDetail/offerDetail';
 import { AddOfferPage } from '../pages/addOffer/addOffer';
 import { UnixTimeToMoment } from '../pipes/UnixTimeToMoment';
+import { MembersPage } from '../pages/members/members';
+import { MemberDetailModal } from '../pages/memberDetail/memberDetail';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +31,9 @@ import { UnixTimeToMoment } from '../pipes/UnixTimeToMoment';
     OfferPage,
     OfferDetailPage,
     AddOfferPage,
-    UnixTimeToMoment
+    UnixTimeToMoment,
+    MembersPage,
+    MemberDetailModal
   ],
   imports: [
     IonicModule.forRoot(LetsApp),
@@ -42,9 +48,11 @@ import { UnixTimeToMoment } from '../pipes/UnixTimeToMoment';
     HomePage,
     OfferPage,
     OfferDetailPage,
-    AddOfferPage
+    AddOfferPage,
+    MembersPage,
+    MemberDetailModal
   ],
-  providers: [
+  providers: [ 
     AppSettings,
     AuthService,
     ConfigService,
@@ -54,6 +62,7 @@ import { UnixTimeToMoment } from '../pipes/UnixTimeToMoment';
     CategoriesService,
     LocalitiesService,
     HttpBasicAuth,
+    MemberService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule { }
